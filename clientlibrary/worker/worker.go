@@ -53,6 +53,7 @@ import (
 //the shards).
 type Worker struct {
 	streamName  string
+	streamArn   string
 	regionName  string
 	workerID    string
 	consumerARN string
@@ -83,6 +84,7 @@ func NewWorker(factory kcl.IRecordProcessorFactory, kclConfig *config.KinesisCli
 
 	return &Worker{
 		streamName:       kclConfig.StreamName,
+		streamArn:        kclConfig.StreamArn,
 		regionName:       kclConfig.RegionName,
 		workerID:         kclConfig.WorkerID,
 		processorFactory: factory,
@@ -240,6 +242,7 @@ func (w *Worker) newShardConsumer(shard *par.ShardStatus) shardConsumer {
 	return &PollingShardConsumer{
 		commonShardConsumer: common,
 		streamName:          w.streamName,
+		streamArn:           w.streamArn,
 		consumerID:          w.workerID,
 		stop:                w.stop,
 		mService:            w.mService,
@@ -458,11 +461,7 @@ func (w *Worker) getShardIDs(nextToken string, shardInfo map[string]bool) error 
 		args.NextToken = aws.String(nextToken)
 	} else {
 		args.StreamName = aws.String(w.streamName)
-		if w.kclConfig.EnableEnhancedFanOutConsumer {
-			if w.consumerARN != "" {
-				args.SetStreamARN(w.consumerARN)
-			}
-		}
+		args.StreamARN = aws.String(w.streamArn)
 	}
 
 	listShards, err := w.kc.ListShards(args)
