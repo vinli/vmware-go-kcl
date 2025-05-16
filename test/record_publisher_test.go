@@ -32,7 +32,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/kinesis/kinesisiface"
 	rec "github.com/awslabs/kinesis-aggregation/go/records"
 	"github.com/golang/protobuf/proto"
-	"github.com/vinli/vmware-go-kcl/clientlibrary/utils"
+	"github.com/vmware/vmware-go-kcl/clientlibrary/utils"
 
 	"testing"
 )

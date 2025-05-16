@@ -11,9 +11,9 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
 	"github.com/aws/aws-sdk-go/service/kinesis/kinesisiface"
 	"github.com/stretchr/testify/assert"
-	chk "github.com/vinli/vmware-go-kcl/clientlibrary/checkpoint"
-	cfg "github.com/vinli/vmware-go-kcl/clientlibrary/config"
-	wk "github.com/vinli/vmware-go-kcl/clientlibrary/worker"
+	chk "github.com/vmware/vmware-go-kcl/clientlibrary/checkpoint"
+	cfg "github.com/vmware/vmware-go-kcl/clientlibrary/config"
+	wk "github.com/vmware/vmware-go-kcl/clientlibrary/worker"
 )
 
 type LeaseStealingTest struct {

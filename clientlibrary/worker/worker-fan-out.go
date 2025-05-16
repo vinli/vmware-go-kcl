@@ -25,7 +25,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/kinesis"
 
-	"github.com/vinli/vmware-go-kcl/clientlibrary/utils"
+	"github.com/vmware/vmware-go-kcl/clientlibrary/utils"
 )
 
 // fetchConsumerARNWithRetry tries to fetch consumer ARN. Retries 10 times with exponential backoff in case of an error

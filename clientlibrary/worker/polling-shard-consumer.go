@@ -35,10 +35,10 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/kinesis"
 
-	chk "github.com/vinli/vmware-go-kcl/clientlibrary/checkpoint"
-	kcl "github.com/vinli/vmware-go-kcl/clientlibrary/interfaces"
-	"github.com/vinli/vmware-go-kcl/clientlibrary/metrics"
-	"github.com/vinli/vmware-go-kcl/clientlibrary/utils"
+	chk "github.com/vmware/vmware-go-kcl/clientlibrary/checkpoint"
+	kcl "github.com/vmware/vmware-go-kcl/clientlibrary/interfaces"
+	"github.com/vmware/vmware-go-kcl/clientlibrary/metrics"
+	"github.com/vmware/vmware-go-kcl/clientlibrary/utils"
 )
 
 // PollingShardConsumer is responsible for polling data records from a (specified) shard.
