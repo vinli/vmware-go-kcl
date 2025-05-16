@@ -45,15 +45,15 @@ import (
 )
 
 // NewKinesisClientLibConfig creates a default KinesisClientLibConfiguration based on the required fields.
-func NewKinesisClientLibConfig(applicationName, streamName, regionName, workerID string) *KinesisClientLibConfiguration {
-	return NewKinesisClientLibConfigWithCredentials(applicationName, streamName, regionName, workerID,
+func NewKinesisClientLibConfig(applicationName, streamName, streamArn, regionName, workerID string) *KinesisClientLibConfiguration {
+	return NewKinesisClientLibConfigWithCredentials(applicationName, streamName, streamArn, regionName, workerID,
 		nil, nil)
 }
 
 // NewKinesisClientLibConfigWithCredential creates a default KinesisClientLibConfiguration based on the required fields and unique credentials.
-func NewKinesisClientLibConfigWithCredential(applicationName, streamName, regionName, workerID string,
+func NewKinesisClientLibConfigWithCredential(applicationName, streamName, streamArn, regionName, workerID string,
 	creds *credentials.Credentials) *KinesisClientLibConfiguration {
-	return NewKinesisClientLibConfigWithCredentials(applicationName, streamName, regionName, workerID, creds, creds)
+	return NewKinesisClientLibConfigWithCredentials(applicationName, streamName, streamArn, regionName, workerID, creds, creds)
 }
 
 // NewKinesisClientLibConfigWithCredentials creates a default KinesisClientLibConfiguration based on the required fields and specific credentials for each service.
