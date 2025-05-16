@@ -182,6 +182,9 @@ type (
 		// StreamName is the name of Kinesis stream
 		StreamName string
 
+		// StreamArn is the arn of a Kinesis stream
+		StreamArn string
+
 		// EnableEnhancedFanOutConsumer enables enhanced fan-out consumer
 		// See: https://docs.aws.amazon.com/streams/latest/dev/enhanced-consumers.html
 		// Either consumer name or consumer ARN must be specified when Enhanced Fan-Out is enabled.

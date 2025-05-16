@@ -50,9 +50,15 @@ func (w *Worker) fetchConsumerARNWithRetry() (string, error) {
 func (w *Worker) fetchConsumerARN() (string, error) {
 	log := w.kclConfig.Logger
 	log.Debugf("Fetching stream consumer ARN")
-	streamDescription, err := w.kc.DescribeStream(&kinesis.DescribeStreamInput{
+	input := &kinesis.DescribeStreamInput{
 		StreamName: &w.kclConfig.StreamName,
-	})
+	}
+	if w.kclConfig.StreamArn != "" {
+		input = &kinesis.DescribeStreamInput{
+			StreamARN: &w.kclConfig.StreamArn,
+		}
+	}
+	streamDescription, err := w.kc.DescribeStream(input)
 	if err != nil {
 		log.Errorf("Could not describe stream: %v", err)
 		return "", err

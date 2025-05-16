@@ -57,7 +57,7 @@ func NewKinesisClientLibConfigWithCredential(applicationName, streamName, region
 }
 
 // NewKinesisClientLibConfigWithCredentials creates a default KinesisClientLibConfiguration based on the required fields and specific credentials for each service.
-func NewKinesisClientLibConfigWithCredentials(applicationName, streamName, regionName, workerID string,
+func NewKinesisClientLibConfigWithCredentials(applicationName, streamName, streamArn, regionName, workerID string,
 	kiniesisCreds, dynamodbCreds *credentials.Credentials) *KinesisClientLibConfiguration {
 	checkIsValueNotEmpty("ApplicationName", applicationName)
 	checkIsValueNotEmpty("StreamName", streamName)
@@ -75,6 +75,7 @@ func NewKinesisClientLibConfigWithCredentials(applicationName, streamName, regio
 		TableName:                                        applicationName,
 		EnhancedFanOutConsumerName:                       applicationName,
 		StreamName:                                       streamName,
+		StreamArn:                                        streamArn,
 		RegionName:                                       regionName,
 		WorkerID:                                         workerID,
 		InitialPositionInStream:                          DefaultInitialPositionInStream,

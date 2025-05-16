@@ -46,6 +46,7 @@ import (
 type PollingShardConsumer struct {
 	commonShardConsumer
 	streamName string
+	streamArn  string
 	stop       *chan struct{}
 	consumerID string
 	mService   metrics.MonitoringService
@@ -62,6 +63,9 @@ func (sc *PollingShardConsumer) getShardIterator() (*string, error) {
 		StartingSequenceNumber: startPosition.SequenceNumber,
 		Timestamp:              startPosition.Timestamp,
 		StreamName:             &sc.streamName,
+	}
+	if sc.streamArn != "" {
+		shardIterArgs.StreamARN  = &sc.streamArn
 	}
 	iterResp, err := sc.kc.GetShardIterator(shardIterArgs)
 	if err != nil {
@@ -124,6 +128,9 @@ func (sc *PollingShardConsumer) getRecords() error {
 		getRecordsArgs := &kinesis.GetRecordsInput{
 			Limit:         aws.Int64(int64(sc.kclConfig.MaxRecords)),
 			ShardIterator: shardIterator,
+		}
+		if sc.streamArn != ""  {
+			getRecordsArgs.StreamARN = aws.String(sc.streamArn)
 		}
 		// Get records from stream and retry as needed
 		getResp, err := sc.kc.GetRecords(getRecordsArgs)
