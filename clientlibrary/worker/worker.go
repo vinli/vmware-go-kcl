@@ -458,6 +458,11 @@ func (w *Worker) getShardIDs(nextToken string, shardInfo map[string]bool) error 
 		args.NextToken = aws.String(nextToken)
 	} else {
 		args.StreamName = aws.String(w.streamName)
+		if w.kclConfig.EnableEnhancedFanOutConsumer {
+			if w.consumerARN != "" {
+				args.SetStreamARN(w.consumerARN)
+			}
+		}
 	}
 
 	listShards, err := w.kc.ListShards(args)
