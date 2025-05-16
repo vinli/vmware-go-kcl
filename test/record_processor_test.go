@@ -23,7 +23,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/stretchr/testify/assert"
-	kc "github.com/vmware/vmware-go-kcl/clientlibrary/interfaces"
+	kc "github.com/vinli/vmware-go-kcl/clientlibrary/interfaces"
 )
 
 // Record processor factory is used to create RecordProcessor

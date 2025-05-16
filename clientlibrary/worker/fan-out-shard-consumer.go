@@ -25,8 +25,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/kinesis"
 
-	chk "github.com/vmware/vmware-go-kcl/clientlibrary/checkpoint"
-	kcl "github.com/vmware/vmware-go-kcl/clientlibrary/interfaces"
+	chk "github.com/vinli/vmware-go-kcl/clientlibrary/checkpoint"
+	kcl "github.com/vinli/vmware-go-kcl/clientlibrary/interfaces"
 )
 
 // FanOutShardConsumer is  responsible for consuming data records of a (specified) shard.
