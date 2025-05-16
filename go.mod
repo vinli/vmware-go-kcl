@@ -3,7 +3,7 @@ module github.com/vinli/vmware-go-kcl
 go 1.17
 
 require (
-	github.com/aws/aws-sdk-go v1.41.7
+	github.com/aws/aws-sdk-go v1.55.7
 	github.com/awslabs/kinesis-aggregation/go v0.0.0-20210630091500-54e17340d32f
 	github.com/golang/protobuf v1.5.2
 	github.com/google/uuid v1.3.0
