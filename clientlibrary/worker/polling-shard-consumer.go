@@ -65,7 +65,7 @@ func (sc *PollingShardConsumer) getShardIterator() (*string, error) {
 		StreamName:             &sc.streamName,
 	}
 	if sc.streamArn != "" {
-		shardIterArgs.StreamARN  = &sc.streamArn
+		shardIterArgs.StreamARN = &sc.streamArn
 	}
 	iterResp, err := sc.kc.GetShardIterator(shardIterArgs)
 	if err != nil {
@@ -80,6 +80,20 @@ func (sc *PollingShardConsumer) getRecords() error {
 	defer sc.releaseLease()
 
 	log := sc.kclConfig.Logger
+
+	if sc.kclConfig.KmsKey != "" {
+		_, err := sc.kc.StartStreamEncryption(&kinesis.StartStreamEncryptionInput{
+			EncryptionType: aws.String("KMS"),
+			StreamARN:      &sc.streamArn,
+			StreamName:     &sc.streamName,
+			KeyId:          &sc.kclConfig.KmsKey,
+		})
+
+		if err != nil {
+			log.Errorf("Error starting stream encryption on stream ARN: %v (%v) with the key %s. Error: %+v", sc.streamArn, sc.streamName, sc.kclConfig.KmsKey, err)
+			return err
+		}
+	}
 
 	// If the shard is child shard, need to wait until the parent finished.
 	if err := sc.waitOnParentShard(); err != nil {
@@ -129,7 +143,7 @@ func (sc *PollingShardConsumer) getRecords() error {
 			Limit:         aws.Int64(int64(sc.kclConfig.MaxRecords)),
 			ShardIterator: shardIterator,
 		}
-		if sc.streamArn != ""  {
+		if sc.streamArn != "" {
 			getRecordsArgs.StreamARN = aws.String(sc.streamArn)
 		}
 		// Get records from stream and retry as needed
@@ -171,6 +185,16 @@ func (sc *PollingShardConsumer) getRecords() error {
 		case <-*sc.stop:
 			shutdownInput := &kcl.ShutdownInput{ShutdownReason: kcl.REQUESTED, Checkpointer: recordCheckpointer}
 			sc.recordProcessor.Shutdown(shutdownInput)
+
+			if sc.kclConfig.KmsKey != "" {
+				sc.kc.StopStreamEncryption(&kinesis.StopStreamEncryptionInput{
+					EncryptionType: aws.String("KMS"),
+					StreamARN:      &sc.streamArn,
+					StreamName:     &sc.streamName,
+					KeyId:          &sc.kclConfig.KmsKey,
+				})
+			}
+
 			return nil
 		default:
 		}

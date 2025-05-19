@@ -166,6 +166,12 @@ func (c *KinesisClientLibConfiguration) WithMaxLeasesForWorker(n int) *KinesisCl
 	return c
 }
 
+func (c *KinesisClientLibConfiguration) WithKMSKey(key string) *KinesisClientLibConfiguration {
+	checkIsValueNotEmpty("KmsKey", key)
+	c.KmsKey = key
+	return c
+}
+
 /**
  * Controls how long the KCL will sleep if no records are returned from Kinesis
  *

@@ -284,6 +284,9 @@ type (
 
 		// LeaseSyncingTimeInterval The number of milliseconds to wait before syncing with lease table (dynamoDB)
 		LeaseSyncingTimeIntervalMillis int
+
+		// kms key if the records are encrypted
+		KmsKey string
 	}
 )
 
